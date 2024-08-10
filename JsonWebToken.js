@@ -1,7 +1,17 @@
+/**
+ *      1. Create server
+ *      2. Connect to MongoDB
+ *      3. Create user schema
+ *      4. Create user model
+ *      5. Register endpoint
+ *      6. Login endpoint
+ *      7. Start the server
+ * */
+
 import mongoose from "mongoose";
 import express from "express";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";          // Bcrypt: For password hashing
+import jwt from "jsonwebtoken";         // JWT: For token generation and verification
 
 const app = express();
 app.use(express.json());
@@ -24,7 +34,15 @@ const userSchema = new mongoose.Schema({
 // User model
 const User = mongoose.model("User", userSchema)
 
-// Register endpoint
+/**
+      1. It accepts POST request
+      2. It expects name, email, password in the request body
+      3. It hashes the password
+      4. It creates a new user
+      5. It saves the user
+      6. It sends a response
+      7. It handles errors
+* */
 app.post("/register", async (req, res) => {
     try {
         const {name, email, password} = req.body;
@@ -50,7 +68,17 @@ app.get("/users", async (req, res) => {
         console.log(error);
     }
 })
-// Login endpoint
+
+/**
+            1. It accepts POST request
+            2. It expects email, password in the request body
+            3. It finds the user with the given email
+            4. It compares the password
+            5. It generates a token
+            6. It sends the token
+            7. It handles errors
+
+* */
 app.post("/login", async (req, res) => {
     try {
         const {email, password} = req.body;
